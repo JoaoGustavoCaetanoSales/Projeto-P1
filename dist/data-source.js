@@ -1,9 +1,16 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppDataSource = void 0;
 require("reflect-metadata");
 const typeorm_1 = require("typeorm");
+// Importar as variáveis de ambiente
+const dotenv_1 = __importDefault(require("dotenv"));
+// Carregar as variáveis do .env
+dotenv_1.default.config();
 const dialect = (_a = process.env.DB_DIALECT) !== null && _a !== void 0 ? _a : "mysql";
 exports.AppDataSource = new typeorm_1.DataSource({
     type: dialect,
@@ -16,5 +23,5 @@ exports.AppDataSource = new typeorm_1.DataSource({
     logging: true,
     entities: [],
     subscribers: [],
-    migrations: [],
+    migrations: [__dirname + "/migration/*.js"],
 });
