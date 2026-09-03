@@ -1,0 +1,46 @@
+RELATÓRIO DO PROJETO
+
+1. Estrutura inicial
+- Foi iniciado o projeto P1.
+- Foi configurado um projeto em TypeScript/Node.js.
+- Foi utilizada a biblioteca TypeORM para conexão com banco de dados.
+
+2. Configuração do banco de dados
+- Foi criado o arquivo src/data-source.ts.
+- Foi importado o reflect-metadata.
+- Foi configurado o DataSource do TypeORM.
+- O dialeto é definido pela variável DB_DIALECT.
+- Foram configurados host, porta, usuário, senha e banco por variáveis de ambiente.
+- A porta padrão é 3306.
+- O synchronize foi definido como false.
+- O logging foi habilitado.
+- A estrutura foi preparada para entities, subscribers e migrations.
+
+3. Configuração do Git
+- node_modules/ foi adicionado ao .gitignore.
+- .env foi adicionado ao .gitignore.
+- relatorio.txt foi adicionado ao .gitignore para não ser versionado.
+
+4. Situação atual
+- A conexão com o banco está preparada.
+- As entidades Situation e User foram adicionadas.
+- Foram criadas migrations para as tabelas situations e users.
+- A migration de usuários foi corrigida para criar a tabela users e relacioná-la à tabela situations por meio da coluna situationId.
+- O banco nodeapi contém as tabelas migrations, situations e users.
+
+5. Novas adições e correções
+- O tsconfig.json foi ajustado para funcionar com TypeScript 7.
+- As opções module e moduleResolution foram configuradas como node16.
+- O projeto continua gerando os arquivos compilados na pasta dist.
+- A compilação foi validada com sucesso usando npm.cmd run build.
+- As migrations foram executadas com sucesso usando npx typeorm migration:run -d dist/data-source.js.
+- A API foi iniciada na porta 8080 e a conexão com o banco nodeapi foi confirmada.
+- O MySQL Workbench foi configurado para acessar o servidor local em localhost:3306.
+
+6. API e controllers
+- Foi criado o AuthController para as rotas de autenticação.
+- Foi criado o SituationsController com rotas para listar, consultar e cadastrar situações.
+- A aplicação foi configurada para receber dados JSON nas requisições.
+- A consulta de situação por id converte o parâmetro para número e retorna 404 quando a situação não existe.
+- O campo nameSituation foi configurado como único na entidade e na migration.
+- O relatorio.txt passou a ser versionado pelo Git.
