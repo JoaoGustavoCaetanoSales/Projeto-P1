@@ -17,12 +17,14 @@ router.get("/situations", async(req:Request, res:Response)=>{
         res.status(200).json(situations);
         return
 
+
     }catch(error){
         res.status(500).json({
             messagem : "Erro ao listar situação!",
         });
         return
     }
+
 
 });
 
@@ -46,9 +48,10 @@ router.get("/situations/:id", async(req:Request, res:Response)=>{
         res.status(200).json(situations);
         return
 
+
     }catch(error){
         res.status(500).json({
-            messagem : "Erro ao listar situação!",
+            messagem : "Erro ao visualizar situação!",
         });
         return
     }
@@ -77,6 +80,78 @@ router.post("/situations", async(req:Request, res:Response)=>{
         res.status(500).json({
             messagem : "Erro ao cadastrar situação!",
         });
+    }
+
+});
+
+//Criar a rota PUT para atualizar uma situação
+router.put("/situations/:id", async(req:Request, res:Response)=>{
+    try{
+        
+        const {id} = req.params;
+
+        var data = req.body;
+
+        const situationRepository = AppDataSource.getRepository(Situation);
+
+        const situations = await situationRepository.findOneBy({id: parseInt(id as string, 10)});
+
+        if(!situations){
+            res.status(404).json({
+                messagem : "Situação não encontrada!",
+            });
+            return
+        }
+        //Atualiza os dados
+        situationRepository.merge(situations, data);
+
+        //Salvar as alterações de dados
+        const updatedSituation = await situationRepository.save(situations);
+
+        res.status(200).json({
+            messagem : "Situação atualizada com sucesso!",
+            situation: updatedSituation,
+        });
+
+    }catch(error){
+        res.status(500).json({
+            messagem : "Erro ao atualizar situação!",
+        });
+        return
+    }
+
+});
+
+//Criar a rota DELETE para excluir uma situação
+router.delete("/situations/:id", async(req:Request, res:Response)=>{
+    try{
+        
+        const {id} = req.params;
+
+        const situationRepository = AppDataSource.getRepository(Situation);
+
+        const situations = await situationRepository.findOneBy({id: parseInt(id as string, 10)});
+
+        if(!situations){
+            res.status(404).json({
+                messagem : "Situação não encontrada!",
+            });
+            return
+        }
+        
+        //Remover os dados no banco de dados
+        await situationRepository.remove(situations);
+
+        res.status(200).json({
+            messagem : "Situação excluída com sucesso!",
+            
+        });
+
+    }catch(error){
+        res.status(500).json({
+            messagem : "Erro ao atualizar situação!",
+        });
+        return
     }
 
 });
