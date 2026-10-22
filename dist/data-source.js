@@ -18,6 +18,9 @@ require("reflect-metadata");
 const typeorm_1 = require("typeorm");
 const Situations_1 = require("./entity/Situations");
 const Users_1 = require("./entity/Users");
+const Products_1 = require("./entity/Products");
+const ProductCategory_1 = require("./entity/ProductCategory");
+const ProductSituation_1 = require("./entity/ProductSituation");
 // Importar as variáveis de ambiente
 const dotenv_1 = __importDefault(require("dotenv"));
 // Carregar as variáveis do .env
@@ -32,7 +35,7 @@ exports.AppDataSource = new typeorm_1.DataSource({
     database: process.env.DB_DATABASE,
     synchronize: false,
     logging: true,
-    entities: [Situations_1.Situation, Users_1.User],
+    entities: [Situations_1.Situation, Users_1.User, Products_1.Product, ProductCategory_1.ProductCategory, ProductSituation_1.ProductSituation],
     subscribers: [],
     migrations: [__dirname + "/migration/*.js"],
 });
