@@ -7,13 +7,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 // Importar as variáveis de ambiente
 const dotenv_1 = __importDefault(require("dotenv"));
+// Importar a biblioteca para permitir conexão externa
+const cors_1 = __importDefault(require("cors"));
 // Carregar as variáveis do .env
 dotenv_1.default.config();
 // Criar a Aplicação Express
 const app = (0, express_1.default)();
 //Criar um middleware para receber os dados no corpo da requisisção
 app.use(express_1.default.json());
+// Criar o midldleware para permitir requisição externa
+app.use((0, cors_1.default)());
 //Incluir as controllers
+const TestConnectionController_1 = __importDefault(require("./controllers/TestConnectionController"));
 const AuthController_1 = __importDefault(require("./controllers/AuthController"));
 const SituationsController_1 = __importDefault(require("./controllers/SituationsController"));
 const ProductsController_1 = __importDefault(require("./controllers/ProductsController"));
@@ -21,6 +26,7 @@ const ProductCategoriesController_1 = __importDefault(require("./controllers/Pro
 const ProductSituationsController_1 = __importDefault(require("./controllers/ProductSituationsController"));
 const UsersController_1 = __importDefault(require("./controllers/UsersController"));
 //Criar as rotas
+app.use("/", TestConnectionController_1.default);
 app.use("/", AuthController_1.default);
 app.use("/", SituationsController_1.default);
 app.use("/", ProductsController_1.default);
